@@ -14,31 +14,32 @@ class Neuronne:
 
             self.activation = activate
 
-            if activate == 'sigmoid':
-                pass
-            elif activate =='tanh':
-                pass
-            elif activate == 'heavyside':
-                pass
-            elif activate == 'softmax':
-                pass
-            elif activate =='relu':
-                pass
-            else:
-                raise NameError('Invalid activation name')
         except Exception as err:
             print(err)
 
     def sigmoid(self, x):
-        return 1/(1-exp(x))
+        try:
+            return 1/(1-exp(x))
+        except:
+            return 0
+
+    def sigmoid_der(self, x):
+        return self.sigmoid(x) * (1-self.sigmoid(x))
 
     def heavyside(self, x):
         if x > 0:
             return 1
         else:
             return 0
+
+    def heavyside_der(self,x):
+        return 0
+
     def hyperbolique(self, x):
         return tanh(x)
+
+    def hyperbolique_der(self, x):
+        return 1 - tanh(x)*tanh(x)
 
     def softmax(self, x):
         if x > 0.5:
@@ -48,6 +49,9 @@ class Neuronne:
 
     def relu(self, x):
         return max(0, x)
+
+    def relu_der(self, x):
+        return 1
 
     def calculate(self, input_data):
         try:
@@ -69,3 +73,21 @@ class Neuronne:
                 raise NameError('Invalid activation name')
         except Exception as e:
             print(e)
+
+    def derivative(self, x):
+        try:
+            if self.activation == 'sigmoid':
+                return self.sigmoid_der(x)
+            elif self.activation =='tanh':
+                return self.hyperbolique_der(x)
+            elif self.activation == 'heavyside':
+                return self.heavyside_der(x)
+            elif self.activation == 'softmax':
+                pass
+            elif self.activation =='relu':
+                return self.relu_der(x)
+            else:
+                raise NameError('Invalid activation name')
+        except Exception as err:
+            print(err)
+

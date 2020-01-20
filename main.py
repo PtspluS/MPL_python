@@ -49,6 +49,7 @@ Pour predire un resultat :
 model = Model(input_size=2)
 model.add(2)
 model.add(5)
+model.add(3)
 model.add(1)
 
 training_data = [

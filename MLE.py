@@ -71,7 +71,8 @@ class Model:
                         deltas = []
                         if la == len(self.couches_layers):
                             for o in outputs_tab[la-1]:
-                                x = o*(1-o)*(target[data_index]-o)
+                                der = self.couches_layers[la-1][0].derivative(o)
+                                x = der*(target[data_index]-o)
                                 deltas.append(x)
                             delta_tab.append(deltas)
                             i += 1
@@ -83,7 +84,8 @@ class Model:
                                 for w in range(len(self.couches_layers[la])):
                                     dw.append(delta_tab[len(outputs_tab)-1-la][w]*self.couches_layers[la][w].weights[n])
                                     #dw.append(delta_tab[len(outputs_tab)-1-la][w]*self.couches_layers[la][w].b)
-                                delta = o*(1-o)*sum(dw)
+                                der = self.couches_layers[la][0].derivative(o)
+                                delta = der*sum(dw)
                                 deltas.append(delta)
                             delta_tab.append(deltas)
                             i += 1
