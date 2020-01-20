@@ -98,9 +98,10 @@ class Model:
                             for w in self.couches_layers[l_index][n_index].weights:
                                 if l_index == 0:
                                     w -= learning_rate * delta_tab[l_index][n_index] * data[data_index][n_index]
-                                else :
-                                    w -= learning_rate*delta_tab[l_index][n_index]*outputs_tab[l_index][n_index]
-                            self.couches_layers[l_index][n_index].b = self.couches_layers[l_index][n_index].b - learning_rate*delta_tab[l_index][n_index]*outputs_tab[l_index][n_index]
+                                    self.couches_layers[l_index][n_index].b = self.couches_layers[l_index][n_index].b - learning_rate * delta_tab[l_index][n_index]
+                                else:
+                                    w -= learning_rate * delta_tab[l_index][n_index] * outputs_tab[l_index][n_index]
+                                    self.couches_layers[l_index][n_index].b = self.couches_layers[l_index][n_index].b - learning_rate*delta_tab[l_index][n_index]
 
                 print("Epoch : "+str(current_epoch)+'/'+str(epochs))
                 if show == 1:

@@ -54,7 +54,7 @@ model.add(2)
 model.add(5)
 model.add(3)
 model.add(2)
-model.add(1)
+model.add(1, "relu")
 
 training_data = [
     [0,0],
@@ -71,7 +71,7 @@ target_data = [
 print(model)
 
 print(model.predict(training_data[0]))
-pr = model.fit(training_data, target_data, 0.3, 100, show=0)
+pr = model.fit(training_data, target_data, 0.001, 500, show=0)
 print(model.predict(training_data[0]))
 print(model.predict(training_data[1]))
 print(model.predict(training_data[2]))

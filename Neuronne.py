@@ -24,7 +24,7 @@ class Neuronne:
             return 0
 
     def sigmoid_der(self, x):
-        return self.sigmoid(x) * (1-self.sigmoid(x))
+        return x * (1-x)
 
     def heavyside(self, x):
         if x > 0:
@@ -51,7 +51,7 @@ class Neuronne:
         return max(0, x)
 
     def relu_der(self, x):
-        return 1
+        return 1 * (x > 0)
 
     def calculate(self, input_data):
         try:
