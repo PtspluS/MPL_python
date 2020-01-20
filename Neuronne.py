@@ -4,17 +4,33 @@ import random
 class Neuronne:
 
     def __init__(self, input=1, activate='sigmoid'):
-        self.weights = []
-        # le b est le poids du bias
-        self.b = random.uniform(-0.5, 0.5)
-        # on crée un tableau avec
-        for i in range(input):
-            self.weights.append(random.uniform(-0.5, 0.5))
+        try :
+            self.weights = []
+            # le b est le poids du bias
+            self.b = random.uniform(-0.5, 0.5)
+            # on crée un tableau avec
+            for i in range(input):
+                self.weights.append(random.uniform(-0.5, 0.5))
 
-        self.activation = activate
+            self.activation = activate
+
+            if activate == 'sigmoid':
+                pass
+            elif activate =='tanh':
+                pass
+            elif activate == 'heavyside':
+                pass
+            elif activate == 'softmax':
+                pass
+            elif activate =='relu':
+                pass
+            else:
+                raise NameError('Invalid activation name')
+        except Exception as err:
+            print(err)
 
     def sigmoid(self, x):
-        return (1/(1-exp(x)))
+        return 1/(1-exp(x))
 
     def heavyside(self, x):
         if x > 0:

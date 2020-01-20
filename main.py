@@ -3,7 +3,7 @@ from MLE import Model
 """"
 Tuto :
 Pour créer un model :
-    model = Model
+    model = Model()
     
 Pour ajouter une couche de neuronnes :
     model.add(<nb_neuronnes>, <fonction_d'activation>)
@@ -47,10 +47,9 @@ Pour predire un resultat :
 """
 
 model = Model(input_size=2)
-model.add(5)
-model.add(3)
 model.add(2)
-model.add(1, 'relu')
+model.add(5)
+model.add(1)
 
 training_data = [
     [0,0],
@@ -67,7 +66,7 @@ target_data = [
 print(model)
 
 print(model.predict(training_data[0]))
-pr = model.fit(training_data, target_data, 0.001, 1000)
+pr = model.fit(training_data, target_data, 0.3, 100)
 print(model.predict(training_data[0]))
 print(model.predict(training_data[1]))
 print(model.predict(training_data[2]))

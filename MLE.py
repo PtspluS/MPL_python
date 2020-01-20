@@ -67,7 +67,7 @@ class Model:
                     i = 0
                     # for each layer from end to start
                     # back propagation
-                    for la in range(len(self.couches_layers), -1, -1):
+                    for la in range(len(self.couches_layers), 0, -1):
                         deltas = []
                         if la == len(self.couches_layers):
                             for o in outputs_tab[la-1]:
@@ -76,26 +76,29 @@ class Model:
                             delta_tab.append(deltas)
                             i += 1
                         else:
-                            for n in range(len(self.couches_layers[la])):
-                                o = outputs_tab[la][n]
+                            for n in range(len(self.couches_layers[la-1])):
+                                o = outputs_tab[la-1][n]
                                 dw = []
                                 d = 0
-                                for w in self.couches_layers[la][n].weights:
-                                    for d in delta_tab[i-1]:
-                                        dw.append(d*w)
-                                    dw.append(d*self.couches_layers[la][n].b)
+                                for w in range(len(self.couches_layers[la])):
+                                    dw.append(delta_tab[len(outputs_tab)-1-la][w]*self.couches_layers[la][w].weights[n])
+                                    #dw.append(delta_tab[len(outputs_tab)-1-la][w]*self.couches_layers[la][w].b)
                                 delta = o*(1-o)*sum(dw)
                                 deltas.append(delta)
                             delta_tab.append(deltas)
                             i += 1
                     # print(delta_tab)
                     # forward propagation
+                    delta_tab = [delta_tab[x] for x in range(len(delta_tab)-1, -1, -1)]
                     for l_index in range(len(self.couches_layers)):
                         # pour chaque neuronnes de la couche
-                        for n_index in range(len(self.couches_layers[l_index])-1):
+                        for n_index in range(len(self.couches_layers[l_index])):
                             for w in self.couches_layers[l_index][n_index].weights:
-                                w = w - learning_rate*delta_tab[len(delta_tab)-1-n_index][n_index]*outputs_tab[l_index][n_index]
-                            self.couches_layers[l_index][n_index].b = self.couches_layers[l_index][n_index].b - learning_rate*delta_tab[len(delta_tab)-1-n_index][n_index]*outputs_tab[l_index][n_index]
+                                if l_index == 0:
+                                    w -= learning_rate * delta_tab[l_index][n_index] * data[data_index][n_index]
+                                else :
+                                    w -= learning_rate*delta_tab[l_index][n_index]*outputs_tab[l_index][n_index]
+                            self.couches_layers[l_index][n_index].b = self.couches_layers[l_index][n_index].b - learning_rate*delta_tab[l_index][n_index]*outputs_tab[l_index][n_index]
 
                 print("Epoch : "+str(current_epoch)+'/'+str(epochs))
                 print('['+'='*round(((current_epoch/epochs)*nb_egals))+'>'+'.'*round(((1-current_epoch/epochs)*nb_egals))+']'+' Training')
