@@ -20,7 +20,7 @@ Pour ajouter une couche de neuronnes :
             - relu
             
 Pour entrainer le reseau :
-    model.fit(<data>, <target_data>, <learning_rate>, <epochs>)
+    model.fit(<data>, <target_data>, <learning_rate>, <epochs>, <show>)
     return : 
         float : pourcentage de precission a la fin de l'entrainement
     
@@ -36,6 +36,9 @@ Pour entrainer le reseau :
     <epochs> : 
         int : nombre de passage de l'algo pour apprendre
         
+    <show> :
+        int : quantité d'affichage lors des epochs
+        
         
 Pour predire un resultat :
     model.predict(<data>)
@@ -50,6 +53,7 @@ model = Model(input_size=2)
 model.add(2)
 model.add(5)
 model.add(3)
+model.add(2)
 model.add(1)
 
 training_data = [
@@ -67,7 +71,7 @@ target_data = [
 print(model)
 
 print(model.predict(training_data[0]))
-pr = model.fit(training_data, target_data, 0.3, 100)
+pr = model.fit(training_data, target_data, 0.3, 100, show=0)
 print(model.predict(training_data[0]))
 print(model.predict(training_data[1]))
 print(model.predict(training_data[2]))

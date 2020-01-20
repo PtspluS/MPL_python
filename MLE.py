@@ -42,7 +42,7 @@ class Model:
         pass
 
     # TODO find where is the error
-    def fit(self, data, target, learning_rate=0.3, epochs=1):
+    def fit(self, data, target, learning_rate=0.3, epochs=1, show=1):
         #try:
             nb_egals = 24
             for current_epoch in range(epochs):
@@ -83,7 +83,7 @@ class Model:
                                 d = 0
                                 for w in range(len(self.couches_layers[la])):
                                     dw.append(delta_tab[len(outputs_tab)-1-la][w]*self.couches_layers[la][w].weights[n])
-                                    #dw.append(delta_tab[len(outputs_tab)-1-la][w]*self.couches_layers[la][w].b)
+                                dw.append(delta_tab[len(outputs_tab)-1-la][w]*self.couches_layers[la][w].b)
                                 der = self.couches_layers[la][0].derivative(o)
                                 delta = der*sum(dw)
                                 deltas.append(delta)
@@ -103,9 +103,11 @@ class Model:
                             self.couches_layers[l_index][n_index].b = self.couches_layers[l_index][n_index].b - learning_rate*delta_tab[l_index][n_index]*outputs_tab[l_index][n_index]
 
                 print("Epoch : "+str(current_epoch)+'/'+str(epochs))
-                print('['+'='*round(((current_epoch/epochs)*nb_egals))+'>'+'.'*round(((1-current_epoch/epochs)*nb_egals))+']'+' Training')
+                if show == 1:
+                    print('['+'='*round(((current_epoch/epochs)*nb_egals))+'>'+'.'*round(((1-current_epoch/epochs)*nb_egals))+']'+' Training')
             print("Epoch : " + str(current_epoch+1) + '/' + str(epochs))
-            print('['+'='*nb_egals+'>'+']'+' Training Finished')
+            if show == 1:
+                print('['+'='*nb_egals+'>'+']'+' Training Finished')
 
             # calcul de la precision du model
             precision = 0
