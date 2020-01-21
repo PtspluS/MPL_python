@@ -19,7 +19,7 @@ class Neuronne:
 
     def sigmoid(self, x):
         try:
-            return 1/(1-exp(x))
+            return 1/(1+exp(-x))
         except:
             return 0
 
@@ -33,7 +33,7 @@ class Neuronne:
             return 0
 
     def heavyside_der(self,x):
-        return 0
+        return 1
 
     def hyperbolique(self, x):
         return tanh(x)

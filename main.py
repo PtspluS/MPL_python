@@ -38,7 +38,9 @@ Pour entrainer le reseau :
         
     <show> :
         int : quantité d'affichage lors des epochs
-        
+            0 : affiche rien
+            1 : affiche la fleche de progression
+            2 : affiche les données testées
         
 Pour predire un resultat :
     model.predict(<data>)
@@ -54,7 +56,7 @@ model.add(2)
 model.add(5)
 model.add(3)
 model.add(2)
-model.add(1, "relu")
+model.add(1)
 
 training_data = [
     [0,0],
@@ -71,11 +73,11 @@ target_data = [
 print(model)
 
 print(model.predict(training_data[0]))
-pr = model.fit(training_data, target_data, 0.001, 500, show=0)
-print(model.predict(training_data[0]))
-print(model.predict(training_data[1]))
-print(model.predict(training_data[2]))
-print(model.predict(training_data[3]))
+pr = model.fit(training_data, target_data, 0.001, 1000, show=2)
+print(model.round_out(model.predict(training_data[0])[0]))
+print(model.round_out(model.predict(training_data[1])[0]))
+print(model.round_out(model.predict(training_data[2])[0]))
+print(model.round_out(model.predict(training_data[3])[0]))
 
 print('Model train with '+str(pr*100)+'% of accuracy')
 

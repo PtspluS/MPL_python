@@ -104,16 +104,18 @@ class Model:
                                     self.couches_layers[l_index][n_index].b = self.couches_layers[l_index][n_index].b - learning_rate*delta_tab[l_index][n_index]
 
                 print("Epoch : "+str(current_epoch)+'/'+str(epochs))
-                if show == 1:
+                if show > 0:
                     print('['+'='*round(((current_epoch/epochs)*nb_egals))+'>'+'.'*round(((1-current_epoch/epochs)*nb_egals))+']'+' Training')
             print("Epoch : " + str(current_epoch+1) + '/' + str(epochs))
-            if show == 1:
+            if show > 0:
                 print('['+'='*nb_egals+'>'+']'+' Training Finished')
 
             # calcul de la precision du model
             precision = 0
             for d, t in zip(data, target):
-                if self.predict(d)[0] == t:
+                if show > 1:
+                    print(str(self.predict(d)[0]) + ' round as => ' + str(self.round_out(self.predict(d)[0])))
+                if self.round_out(self.predict(d)[0]) == t:
                     precision += 1.0
             precision = precision/len(target)
 
@@ -156,3 +158,9 @@ class Model:
                 return obj
         except Exception as err:
             print(err)
+
+    def round_out(self, x):
+        if x > 0.5:
+            return 1
+        else:
+            return 0
